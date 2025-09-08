@@ -6,7 +6,7 @@
   --muted: #9aa6bf;
   --text: #eaf2ff;
   --overlay-rgb: 6,18,40; /* fallback overlay color */
-  --overlay-alpha: 0.36;
+  --overlay-alpha: 0.2;
 }
 html,body{height:100%;}
 body{
@@ -32,7 +32,7 @@ body{
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(rgba(var(--overlay-rgb),var(--overlay-alpha)), rgba(var(--overlay-rgb),calc(var(--overlay-alpha) + 0.08)));}
 .hero-content{position:relative;display:flex;gap:2rem;align-items:center;justify-content:space-between}
 .hero-text h1{font-size:2.25rem;margin:0 0 0.5rem;font-weight:700}
-.lead{color:var(--muted);max-width:50ch}
+.lead{color:#ffffff;max-width:50ch}
 .hero-image img{width:300px;height:300px;object-fit:cover;border-radius:999px;border:8px solid rgba(255,255,255,0.12);box-shadow:0 22px 60px rgba(3,10,30,0.72);transition:transform .45s ease, box-shadow .35s ease}
 .hero-image img:hover{transform:scale(1.04);box-shadow:0 36px 90px rgba(3,10,30,0.75)}
 .scroll-hint{position:absolute;left:50%;transform:translateX(-50%);bottom:1.25rem;color:var(--muted);text-decoration:none}
