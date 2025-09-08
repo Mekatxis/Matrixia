@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Matrixia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-bg-local="true">
+  <header class="site-header">
+    <nav class="nav container">
+      <button class="mobile-anchor" aria-expanded="false"><span>Matrixia</span> <span class="arrow">▾</span></button>
+      <button class="nav-toggle" aria-label="Abrir menú">☰</button>
+      <ul class="nav-links">
+        <li><a href="#hero">Inicio</a></li>
+        <li><a href="#presentacion">Presentación</a></li>
+        <li><a href="#about">Sobre mí</a></li>
+        <li><a href="#skills">Habilidades</a></li>
+        <li><a href="#projects">Proyectos</a></li>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#contact">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero / Portada -->
+    <section id="hero" class="hero">
+      <div class="hero-overlay"></div>
+      <div class="container hero-content">
+        <div class="hero-text">
+          <h1 data-animate="fade-up" class="hero-title">Hola, soy Miguel.</h1>
+          <p class="lead hero-subtitle" data-animate="fade-up">Estudiante de telecomunicaciones. Apasionado por la informática, electrónica y la seguridad.</p>
+        </div>
+        <div class="hero-image" data-animate="float">
+          <!-- Floating image: replace assets/me.png with your photo -->
+          <img src="assets/me.png" alt="Mi foto" />
+        </div>
+      </div>
+  <a class="scroll-hint" href="#presentacion">Ver más ↓</a>
+    </section>
+
+    <!-- Presentación Avanzada -->
+    <section id="presentacion" class="section">
+      <div class="container" data-animate="fade-up">
+        <h2>Me presento:</h2>
+        <p>Soy una persona organizada, me gusta trabajar en equipo y actualmente curso un grado medio de técnico en telecomunicaciones. Me apasiona la informática y la electrónica; tengo conocimientos básicos de Python, HTML y CSS. Disfruto realizando proyectos con IA y aprendiendo nuevas tecnologías.</p>
+      </div>
+    </section>
+
+    <!-- Sobre mí -->
+    <section id="about" class="section alt">
+      <div class="container" data-animate="fade-up">
+        <h2>Sobre mí</h2>
+        <p>Desde muy pequeño, a los 9 años, despertó en mí una cálida pasión por la informática cuando mi padre trajo a casa un Spectrum, un recuerdo que aún evoca nostalgia. Entre juegos infantiles, me perdía explorando: tecleando en MS-DOS, experimentando con curiosidad y desmontando juguetes para descubrir sus secretos. A los 12, mi primer PC de sobremesa se convirtió en mi compañero inseparable. Aunque al principio, movido por esa curiosidad, lo llenaba de virus explorando la web, aprendí a sanarlo con dedicación, y desde entonces he perfeccionado el arte de optimizar, limpiar y personalizar ordenadores. Repararlos y desmontarlos sigue siendo una alegría que me conecta con ese espíritu inicial.
+Hoy, mientras estudio telecomunicaciones, mi mirada se posa con entusiasmo en el mundo de la ciberseguridad, un campo que me apasiona profundamente. Mi objetivo es construir una carrera profesional en este ámbito, ofreciendo soluciones con cercanía y profesionalidad, siempre guiado por esa chispa que se encendió hace años gracias a mi padre.</p>
+      </div>
+    </section>
+
+    <!-- Habilidades -->
+    <section id="skills" class="section">
+      <div class="container" data-animate="fade-up">
+        <h2>Mis habilidades</h2>
+        <ul class="skills-grid">
+          <li>
+            <h3>Python</h3>
+            <div class="skill-bar"><div class="skill-fill" data-skill="60"></div></div>
+          </li>
+          <li>
+            <h3>HTML / CSS</h3>
+            <div class="skill-bar"><div class="skill-fill" data-skill="65"></div></div>
+          </li>
+          <li>
+            <h3>Máquinas virtuales & Software</h3>
+            <div class="skill-bar"><div class="skill-fill" data-skill="70"></div></div>
+          </li>
+          <li>
+            <h3>Hardware & Redes</h3>
+            <div class="skill-bar"><div class="skill-fill" data-skill="75"></div></div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Proyectos -->
+    <section id="projects" class="section alt">
+      <div class="container" data-animate="fade-up">
+        <h2>Proyectos</h2>
+        <ul class="projects-list">
+          <li>Mantenimiento de >15 ordenadores para familiares y amigos.</li>
+          <li>Configuración de red doméstica en entornos con fibra.</li>
+          <li>Optimización de portátiles lentos.</li>
+          <li>Experiencia como vendedor de tecnología en Worten Chafiras.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Blog (lista de artículos) -->
+    <section id="blog" class="section">
+      <div class="container" data-animate="fade-up">
+        <h2>Blog</h2>
+        <div class="blog-buttons">
+          <button class="blog-button" data-animate="fade-up" onclick="window.location.href='blog/como-elegir-un-buen-pc.html'">Cómo elegir un buen PC según el presupuesto</button>
+          <button class="blog-button" data-animate="fade-up" onclick="window.location.href='blog/las-mejores-tarjetas-graficas-2025.html'">Las Mejores Tarjetas Gráficas de 2025 por Categorías</button>
+          <button class="blog-button" data-animate="fade-up" onclick="window.location.href='blog/por-que-es-mejor-m.2-que-ssd-y-hdd.html'">Por qué elegir M.2 o NVMe frente a SSD o HDD</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contact" class="section alt">
+      <div class="container" data-animate="fade-up">
+        <h2>Contacto</h2>
+        <button class="contact-btn" onclick="window.location.href='mailto:matrixiainformatica@gmail.com'">E-mail</button>
+        <button class="contact-btn" onclick="window.open('https://www.linkedin.com/in/josemiguelmora/', '_blank')">Mi perfil profesional de LinkedIn</button>
+        <button class="contact-btn" onclick="const link = document.createElement('a'); link.href = 'assets/cv.pdf'; link.download = 'cv.pdf'; link.click();">Descargar mi currículum (PDF)</button>
+        <button class="contact-btn" id="presupuestos-btn">Presupuestos</button>
+      </div>
+    </section>
+
+    <!-- Aviso legal -->
+    <footer id="legal" class="site-footer">
+      <div class="container">
+        <h3>Aviso legal</h3>
+        <p>No me hago responsable del uso indebido o mal uso de los equipos antes o después de prestar servicio. Ofrezco una garantía de 7 días para los trabajos realizados. Este sitio tiene carácter informativo y formativo.</p>
+        <p class="muted">© Matrixia — Todos los derechos reservados</p>
+      </div>
+    </footer>
+  </main>
+
+  <script src="scripts.js"></script>
+</body>
+</html>
