@@ -56,7 +56,7 @@ h1,h2,h3,strong,b,.nav-links a,.logo,.btn{font-family: 'Montserrat', Inter, syst
 [data-animate]{opacity:0;transform:translateY(14px);transition:opacity .7s ease, transform .7s ease}
 [data-animate].is-visible{opacity:1;transform:none}
 /* delay subtitle (hero-subtitle) 2s after it becomes visible */
-.hero-subtitle[data-animate]{transition-delay:2s}
+.hero-subtitle[data-animate]{transition-delay:2s; color: #ffffff;}
 /* Floating via CSS animation for simple smooth effect */
 @keyframes floaty{0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)}}
 [data-animate="float"] img{animation:floaty 4s ease-in-out infinite}
