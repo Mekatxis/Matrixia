@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
         // Embed content directly to avoid fetch issues locally
         const htmlContent = `
-          <h1>Plantilla de Precios</h1>
+          <h1>Plantilla de Presupuestos</h1>
           <div class="price-list">
             Mantenimiento/limpieza: <span>10-15€</span><br />
             Eliminación virus+Antivirus: <span>12-18€</span><br />
@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             <p><strong>Garantía:</strong> Por la mano de obra, ofrezco una garantía de 7 días a partir del día en que te entregue el PC.</p>
           </div>
           <div class="payment">
-            <span>Se acepta pago por:</span>
+            <span>Suelo aceptar pago en:</span>
             <img src="assets/efectivo.png" alt="Efectivo" title="Efectivo" />
           </div>
           <button class="close-toast">Cerrar</button>
