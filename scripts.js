@@ -281,13 +281,25 @@ document.addEventListener('DOMContentLoaded',()=>{
     });
   }
 
+  // Initialize EmailJS
+  emailjs.init('EqDZpPvMPNQKsV7Mu');
+
   // Reviews functionality
   const reviewForm = document.getElementById('reviewForm');
   const reviewsList = document.getElementById('reviews-list');
 
   if (reviewForm && reviewsList) {
-    // Load reviews from localStorage
-    let reviews = JSON.parse(localStorage.getItem('reviews') || '[]');
+    // Load reviews from Reviews.json
+    fetch('Reviews.json')
+      .then(response => response.json())
+      .then(data => {
+        reviews = data;
+        displayReviews();
+      })
+      .catch(error => {
+        console.error('Error loading reviews:', error);
+        reviews = [];
+      });
 
     // Function to display reviews
     function displayReviews() {
@@ -308,9 +320,6 @@ document.addEventListener('DOMContentLoaded',()=>{
       });
     }
 
-    // Display reviews on load
-    displayReviews();
-
     // Handle form submit
     reviewForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -320,17 +329,21 @@ document.addEventListener('DOMContentLoaded',()=>{
       const rating = parseInt(formData.get('rating'));
 
       if (name && comment && rating) {
-        const newReview = {
-          name,
-          comment,
-          rating,
-          date: new Date().toISOString()
-        };
-        reviews.push(newReview);
-        localStorage.setItem('reviews', JSON.stringify(reviews));
-        reviewForm.reset();
-        displayReviews();
-        alert('¡Reseña enviada con éxito!');
+        // Send email via EmailJS
+        emailjs.send('service_f4ac4iu', 'template_6qz0zo5', {
+          from_name: name,
+          message: comment,
+          rating: rating,
+          to_email: 'jmmoragiraldo@gmail.com'
+        })
+        .then(() => {
+          reviewForm.reset();
+          alert('¡Reseña enviada con éxito! Te llegará por email.');
+        })
+        .catch((error) => {
+          console.error('Error sending email:', error);
+          alert('Error al enviar la reseña. Inténtalo de nuevo.');
+        });
       } else {
         alert('Por favor, completa todos los campos.');
       }
