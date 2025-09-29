@@ -280,4 +280,81 @@ document.addEventListener('DOMContentLoaded',()=>{
       }
     });
   }
+
+  // Reviews functionality
+  const reviewForm = document.getElementById('reviewForm');
+  const reviewsList = document.getElementById('reviews-list');
+
+  if (reviewForm && reviewsList) {
+    // Load reviews from localStorage
+    let reviews = JSON.parse(localStorage.getItem('reviews') || '[]');
+
+    // Function to display reviews
+    function displayReviews() {
+      reviewsList.innerHTML = '';
+      // Sort by date descending (newest first)
+      reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
+      // Show only 5 most recent
+      const recentReviews = reviews.slice(0, 5);
+      recentReviews.forEach(review => {
+        const reviewDiv = document.createElement('div');
+        reviewDiv.className = 'review-item';
+        reviewDiv.innerHTML = `
+          <h3>${review.name}</h3>
+          <div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
+          <p class="review-comment">${review.comment}</p>
+        `;
+        reviewsList.appendChild(reviewDiv);
+      });
+    }
+
+    // Display reviews on load
+    displayReviews();
+
+    // Handle form submit
+    reviewForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(reviewForm);
+      const name = formData.get('name').trim();
+      const comment = formData.get('comment').trim();
+      const rating = parseInt(formData.get('rating'));
+
+      if (name && comment && rating) {
+        const newReview = {
+          name,
+          comment,
+          rating,
+          date: new Date().toISOString()
+        };
+        reviews.push(newReview);
+        localStorage.setItem('reviews', JSON.stringify(reviews));
+        reviewForm.reset();
+        displayReviews();
+        alert('¡Reseña enviada con éxito!');
+      } else {
+        alert('Por favor, completa todos los campos.');
+      }
+    });
+  }
+
+  // Reviews toggle functionality
+  const reviewsToggleBtn = document.getElementById('reviews-toggle-btn');
+  const reviewsSection = document.getElementById('review-form');
+
+  if (reviewsToggleBtn && reviewsSection) {
+    reviewsToggleBtn.addEventListener('click', () => {
+      const isVisible = reviewsSection.style.display !== 'none';
+      if (isVisible) {
+        reviewsSection.classList.remove('show');
+        setTimeout(() => {
+          reviewsSection.style.display = 'none';
+        }, 500); // Match transition duration
+      } else {
+        reviewsSection.style.display = 'block';
+        setTimeout(() => {
+          reviewsSection.classList.add('show');
+        }, 10); // Small delay to allow display change
+      }
+    });
+  }
 });
