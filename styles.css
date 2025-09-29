@@ -355,7 +355,7 @@ h1,h2,h3,strong,b,.nav-links a,.logo,.btn{font-family: 'Montserrat', Inter, syst
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 600;
-  color: var(--text);
+  color: #ffffff;
 }
 
 .form-group input,
@@ -365,7 +365,7 @@ h1,h2,h3,strong,b,.nav-links a,.logo,.btn{font-family: 'Montserrat', Inter, syst
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.1);
-  color: var(--text);
+  color: #ffffff;
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
 }
@@ -453,16 +453,16 @@ h1,h2,h3,strong,b,.nav-links a,.logo,.btn{font-family: 'Montserrat', Inter, syst
 
 .review-item h3 {
   margin: 0 0 0.5rem 0;
-  color: var(--accent);
+  color: #ffffff;
 }
 
 .review-stars {
-  color: var(--accent);
+  color: #ffffff;
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
 }
 
 .review-comment {
-  color: var(--text);
+  color: #ffffff;
   line-height: 1.5;
 }
