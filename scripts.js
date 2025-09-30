@@ -1,4 +1,11 @@
 document.addEventListener('DOMContentLoaded',()=>{
+  // Initialize EmailJS
+  try {
+    emailjs.init('EqDZpPvMPNQKsV7Mu');
+  } catch (e) {
+    console.warn('EmailJS init failed:', e);
+  }
+
   // Nav toggle for small screens
   const btn = document.querySelector('.nav-toggle');
   const links = document.querySelector('.nav-links');
@@ -343,26 +350,43 @@ document.addEventListener('DOMContentLoaded',()=>{
   if (reviewForm) {
     reviewForm.addEventListener('submit', (e) => {
       e.preventDefault();
+      alert('Procesando envío de reseña...');
       const name = document.getElementById('review-name').value.trim();
       const comment = document.getElementById('review-comment').value.trim();
       const rating = document.querySelector('input[name="rating"]:checked')?.value;
 
       if (name && comment && rating) {
-        const newReview = {
-          name: name,
-          stars: parseInt(rating),
-          comment: comment
-        };
-        reviews.unshift(newReview); // Add to beginning
-        renderReviews();
-        reviewForm.reset();
-        reviewFormContainer.style.display = 'none';
+        if (typeof emailjs !== 'undefined') {
+          alert('Enviando email...');
+          emailjs.send('service_f4ac4iu', 'template_6qz0zo5', {
+            name: name,
+            comment: comment,
+            rating: rating
+          }).then(() => {
+            alert('Email enviado correctamente.');
+            // On success, add to local reviews and render
+            const newReview = {
+              name: name,
+              stars: parseInt(rating),
+              comment: comment
+            };
+            reviews.unshift(newReview); // Add to beginning
+            renderReviews();
+            reviewForm.reset();
+            reviewFormContainer.style.display = 'none';
+            alert('Reseña enviada correctamente.');
+          }).catch((error) => {
+            console.error('Error al enviar la reseña:', error);
+            alert('Error al enviar la reseña: ' + error.text);
+          });
+        } else {
+          alert('EmailJS no está disponible. Revisa la conexión a internet o el script.');
+        }
       } else {
-        alert('Por favor, completa todos los campos.');
+        alert('Por favor, completa todos los campos: nombre, comentario y puntuación.');
       }
     });
+  } else {
+    console.warn('Formulario de reseñas no encontrado.');
   }
-
-  // Initialize EmailJS
-  emailjs.init('EqDZpPvMPNQKsV7Mu');
 });
