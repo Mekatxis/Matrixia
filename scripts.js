@@ -281,93 +281,88 @@ document.addEventListener('DOMContentLoaded',()=>{
     });
   }
 
-  // Initialize EmailJS
-  emailjs.init('EqDZpPvMPNQKsV7Mu');
+  // Load and display reviews
+  let reviews = [
+    {
+      "name": "María González",
+      "stars": 5,
+      "comment": "Excelente servicio de mantenimiento de PC. Mi ordenador va como nuevo después de la limpieza y optimización. Muy profesional y atento."
+    },
+    {
+      "name": "Pedro Sánchez",
+      "stars": 5,
+      "comment": "Resolvió un problema grave con mi portátil que nadie más pudo arreglar. Recomiendo sus servicios al 100%."
+    },
+    {
+      "name": "Carmen López",
+      "stars": 4,
+      "comment": "Buen trabajo en la configuración de mi red doméstica. Todo funciona perfectamente ahora. Solo tardó un poco más de lo esperado."
+    },
+    {
+      "name": "Antonio Ruiz",
+      "stars": 5,
+      "comment": "Instaló Windows y todos los programas que necesitaba. Todo quedó perfecto y me explicó cómo mantenerlo. Excelente atención."
+    },
+    {
+      "name": "Isabel Martín",
+      "stars": 5,
+      "comment": "Servicio de eliminación de virus muy efectivo. Mi PC estaba infectado y ahora funciona sin problemas. Gracias por la paciencia."
+    }
+  ];
 
-  // Reviews functionality
-  const reviewForm = document.getElementById('reviewForm');
   const reviewsList = document.getElementById('reviews-list');
 
-  if (reviewForm && reviewsList) {
-    // Load reviews from Reviews.json
-    fetch('Reviews.json')
-      .then(response => response.json())
-      .then(data => {
-        reviews = data;
-        displayReviews();
-      })
-      .catch(error => {
-        console.error('Error loading reviews:', error);
-        reviews = [];
-      });
+  function renderReviews() {
+    reviewsList.innerHTML = '';
+    reviews.forEach((review, index) => {
+      const reviewItem = document.createElement('div');
+      reviewItem.className = 'review-item';
+      reviewItem.innerHTML = `
+        <h3>${review.name}</h3>
+        <div class="review-stars">${'★'.repeat(review.stars)}${'☆'.repeat(5 - review.stars)}</div>
+        <p class="review-comment">${review.comment}</p>
+      `;
+      reviewsList.appendChild(reviewItem);
+    });
+  }
 
-    // Function to display reviews
-    function displayReviews() {
-      reviewsList.innerHTML = '';
-      // Sort by date descending (newest first)
-      reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
-      // Show only 5 most recent
-      const recentReviews = reviews.slice(0, 5);
-      recentReviews.forEach(review => {
-        const reviewDiv = document.createElement('div');
-        reviewDiv.className = 'review-item';
-        reviewDiv.innerHTML = `
-          <h3>${review.name}</h3>
-          <div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
-          <p class="review-comment">${review.comment}</p>
-        `;
-        reviewsList.appendChild(reviewDiv);
-      });
-    }
+  renderReviews();
 
-    // Handle form submit
+  // Toggle review form
+  const addReviewBtn = document.getElementById('add-review-btn');
+  const reviewFormContainer = document.getElementById('review-form-container');
+  if (addReviewBtn && reviewFormContainer) {
+    addReviewBtn.addEventListener('click', () => {
+      const isVisible = reviewFormContainer.style.display !== 'none';
+      reviewFormContainer.style.display = isVisible ? 'none' : 'block';
+    });
+  }
+
+  // Handle review form submission
+  const reviewForm = document.getElementById('review-form');
+  if (reviewForm) {
     reviewForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const formData = new FormData(reviewForm);
-      const name = formData.get('name').trim();
-      const comment = formData.get('comment').trim();
-      const rating = parseInt(formData.get('rating'));
+      const name = document.getElementById('review-name').value.trim();
+      const comment = document.getElementById('review-comment').value.trim();
+      const rating = document.querySelector('input[name="rating"]:checked')?.value;
 
       if (name && comment && rating) {
-        // Send email via EmailJS
-        emailjs.send('service_f4ac4iu', 'template_6qz0zo5', {
-          from_name: name,
-          message: comment,
-          rating: rating,
-          to_email: 'jmmoragiraldo@gmail.com'
-        })
-        .then(() => {
-          reviewForm.reset();
-          alert('¡Reseña enviada con éxito! Te llegará por email.');
-        })
-        .catch((error) => {
-          console.error('Error sending email:', error);
-          alert('Error al enviar la reseña. Inténtalo de nuevo.');
-        });
+        const newReview = {
+          name: name,
+          stars: parseInt(rating),
+          comment: comment
+        };
+        reviews.unshift(newReview); // Add to beginning
+        renderReviews();
+        reviewForm.reset();
+        reviewFormContainer.style.display = 'none';
       } else {
         alert('Por favor, completa todos los campos.');
       }
     });
   }
 
-  // Reviews toggle functionality
-  const reviewsToggleBtn = document.getElementById('reviews-toggle-btn');
-  const reviewsSection = document.getElementById('review-form');
-
-  if (reviewsToggleBtn && reviewsSection) {
-    reviewsToggleBtn.addEventListener('click', () => {
-      const isVisible = reviewsSection.style.display !== 'none';
-      if (isVisible) {
-        reviewsSection.classList.remove('show');
-        setTimeout(() => {
-          reviewsSection.style.display = 'none';
-        }, 500); // Match transition duration
-      } else {
-        reviewsSection.style.display = 'block';
-        setTimeout(() => {
-          reviewsSection.classList.add('show');
-        }, 10); // Small delay to allow display change
-      }
-    });
-  }
+  // Initialize EmailJS
+  emailjs.init('EqDZpPvMPNQKsV7Mu');
 });

@@ -22,6 +22,7 @@
         <li><a href="#projects">Proyectos</a></li>
         <li><a href="#blog">Blog</a></li>
         <li><a href="#contact">Contacto</a></li>
+        <li><a href="#reviews">Reseñas</a></li>
       </ul>
     </nav>
   </header>
@@ -64,24 +65,16 @@ Hoy, mientras estudio telecomunicaciones, mi mirada se posa con entusiasmo en el
     <section id="skills" class="section">
       <div class="container" data-animate="fade-up">
         <h2>Mis habilidades</h2>
-        <ul class="skills-grid">
-          <li>
-            <h3>Python</h3>
-            <div class="skill-bar"><div class="skill-fill" data-skill="60"></div></div>
-          </li>
-          <li>
-            <h3>HTML / CSS</h3>
-            <div class="skill-bar"><div class="skill-fill" data-skill="65"></div></div>
-          </li>
-          <li>
-            <h3>Máquinas virtuales & Software</h3>
-            <div class="skill-bar"><div class="skill-fill" data-skill="70"></div></div>
-          </li>
-          <li>
-            <h3>Hardware & Redes</h3>
-            <div class="skill-bar"><div class="skill-fill" data-skill="75"></div></div>
-          </li>
-        </ul>
+        <div class="skills-pie-container">
+          <div class="skills-pie"></div>
+          <div class="skills-legend">
+            <div class="legend-item"><span class="legend-color python"></span> Python (60%)</div>
+            <div class="legend-item"><span class="legend-color htmlcss"></span> HTML / CSS (65%)</div>
+            <div class="legend-item"><span class="legend-color maquina"></span> Máquinas virtuales & Software (70%)</div>
+            <div class="legend-item"><span class="legend-color hardware"></span> Hardware & Redes (85%)</div>
+            <div class="legend-item"><span class="legend-color atencion"></span> Atención al cliente (85%)</div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -121,48 +114,42 @@ Hoy, mientras estudio telecomunicaciones, mi mirada se posa con entusiasmo en el
       </div>
     </section>
 
-    <!-- Reseñas recientes -->
-    <section id="reviews-display" class="section alt">
+    <!-- Reseñas -->
+    <section id="reviews" class="section alt">
       <div class="container" data-animate="fade-up">
-        <div id="reviews">
-          <h2>Reseñas recientes</h2>
-          <div id="reviews-list"></div>
-        </div>
-        <button class="contact-btn" id="reviews-toggle-btn">Deja tu reseña</button>
-
-        <!-- Formulario de reseñas -->
-        <div id="review-form" class="reviews-collapsible" style="display: none;">
-          <h2>Deja tu reseña</h2>
-          <form id="reviewForm">
+        <h2>Reseñas</h2>
+        <div id="reviews-list"></div>
+        <button id="add-review-btn" class="add-review-btn">Añade tu reseña</button>
+        <div id="review-form-container" class="review-form-container" style="display: none;">
+          <form id="review-form">
             <div class="form-group">
-              <label for="name">Nombre:</label>
-              <input type="text" id="name" name="name" required>
+              <label for="review-name">Nombre:</label>
+              <input type="text" id="review-name" name="name" required>
             </div>
             <div class="form-group">
-              <label for="comment">Comentario:</label>
-              <textarea id="comment" name="comment" rows="4" required></textarea>
+              <label for="review-comment">Comentario:</label>
+              <textarea id="review-comment" name="comment" rows="4" required></textarea>
             </div>
             <div class="form-group">
               <label>Puntuación:</label>
               <div class="star-rating">
-                <input type="radio" id="star5" name="rating" value="5" required>
-                <label for="star5">★</label>
-                <input type="radio" id="star4" name="rating" value="4">
-                <label for="star4">★</label>
-                <input type="radio" id="star3" name="rating" value="3">
-                <label for="star3">★</label>
-                <input type="radio" id="star2" name="rating" value="2">
-                <label for="star2">★</label>
-                <input type="radio" id="star1" name="rating" value="1">
-                <label for="star1">★</label>
+                <input type="radio" id="star-5" name="rating" value="5">
+                <label for="star-5">★</label>
+                <input type="radio" id="star-4" name="rating" value="4">
+                <label for="star-4">★</label>
+                <input type="radio" id="star-3" name="rating" value="3">
+                <label for="star-3">★</label>
+                <input type="radio" id="star-2" name="rating" value="2">
+                <label for="star-2">★</label>
+                <input type="radio" id="star-1" name="rating" value="1">
+                <label for="star-1">★</label>
               </div>
             </div>
-            <button type="submit" class="btn">Enviar reseña</button>
+            <button type="submit" class="submit-review-btn">Enviar reseña</button>
           </form>
         </div>
       </div>
     </section>
-    Por el momento esta opción está en mantenimiento.
 
     <!-- Aviso legal -->
     <footer id="legal" class="site-footer">
