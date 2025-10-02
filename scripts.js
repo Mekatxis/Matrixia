@@ -1,4 +1,5 @@
-document.addEventListener('DOMContentLoaded',()=>{
+
+document.addEventListener('DOMContentLoaded', () => {
   // Initialize EmailJS
   try {
     emailjs.init('EqDZpPvMPNQKsV7Mu');
@@ -9,11 +10,11 @@ document.addEventListener('DOMContentLoaded',()=>{
   // Nav toggle for small screens
   const btn = document.querySelector('.nav-toggle');
   const links = document.querySelector('.nav-links');
-  if(btn && links){
-    btn.addEventListener('click',()=>{
+  if (btn && links) {
+    btn.addEventListener('click', () => {
       const header = document.querySelector('.site-header');
       const open = links.classList.toggle('is-open');
-      if(open){
+      if (open) {
         header.classList.add('menu-open');
       } else {
         header.classList.remove('menu-open');
@@ -23,82 +24,101 @@ document.addEventListener('DOMContentLoaded',()=>{
 
   // mobile anchor toggle (Matrixia) - toggles same menu
   const mobileAnchor = document.querySelector('.mobile-anchor');
-  if(mobileAnchor){
-    mobileAnchor.addEventListener('click',()=>{
+  if (mobileAnchor) {
+    mobileAnchor.addEventListener('click', () => {
       const header = document.querySelector('.site-header');
       const open = links.classList.toggle('is-open');
-      if(open) header.classList.add('menu-open'); else header.classList.remove('menu-open');
+      if (open) header.classList.add('menu-open');
+      else header.classList.remove('menu-open');
       mobileAnchor.setAttribute('aria-expanded', String(open));
     });
   }
 
   // IntersectionObserver for reveal animations
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        entry.target.classList.add('is-visible');
-        io.unobserve(entry.target);
-      }
-    });
-  },{threshold:0.12});
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
 
-  document.querySelectorAll('[data-animate]').forEach(el=>io.observe(el));
+  document.querySelectorAll('[data-animate]').forEach((el) => io.observe(el));
 
   // Animate skill bars
-  document.querySelectorAll('.skill-fill').forEach(el=>{
+  document.querySelectorAll('.skill-fill').forEach((el) => {
     const v = el.getAttribute('data-skill') || 50;
     // small timeout to allow layout
-    setTimeout(()=>el.style.width = v + '%', 600);
+    setTimeout(() => (el.style.width = v + '%'), 600);
   });
 
   // Extract basic palette from background image and set CSS variables for harmony
   const bgImg = new Image();
   bgImg.crossOrigin = 'Anonymous';
   bgImg.src = 'assets/bg.jpg';
-  bgImg.onload = ()=>{
-    try{
+  bgImg.onload = () => {
+    try {
       const c = document.createElement('canvas');
       c.width = Math.min(bgImg.width, 200);
       c.height = Math.min(bgImg.height, 200);
       const ctx = c.getContext('2d');
-      ctx.drawImage(bgImg,0,0,c.width,c.height);
-      const data = ctx.getImageData(0,0,c.width,c.height).data;
+      ctx.drawImage(bgImg, 0, 0, c.width, c.height);
+      const data = ctx.getImageData(0, 0, c.width, c.height).data;
       // simple color aggregator: average of pixels + a secondary tint
-      let r=0,g=0,b=0,count=0;
-      for(let i=0;i<data.length;i+=4){
-        const alpha = data[i+3];
-        if(alpha<128) continue;
-        r+=data[i]; g+=data[i+1]; b+=data[i+2]; count++;
+      let r = 0,
+        g = 0,
+        b = 0,
+        count = 0;
+      for (let i = 0; i < data.length; i += 4) {
+        const alpha = data[i + 3];
+        if (alpha < 128) continue;
+        r += data[i];
+        g += data[i + 1];
+        b += data[i + 2];
+        count++;
       }
-      if(count===0) return;
-      r=Math.round(r/count); g=Math.round(g/count); b=Math.round(b/count);
+      if (count === 0) return;
+      r = Math.round(r / count);
+      g = Math.round(g / count);
+      b = Math.round(b / count);
       // compute a lighter tint for second accent
-      const tint = (v,amt)=>Math.min(255, Math.round(v + amt));
-      const r2 = tint(r,60), g2 = tint(g,60), b2 = tint(b,90);
+      const tint = (v, amt) => Math.min(255, Math.round(v + amt));
+      const r2 = tint(r, 60),
+        g2 = tint(g, 60),
+        b2 = tint(b, 90);
       // muted color: desaturate average
-      const avg = Math.round((r+g+b)/3);
-      const rm = Math.round((r+avg)/2), gm = Math.round((g+avg)/2), bm = Math.round((b+avg)/2);
+      const avg = Math.round((r + g + b) / 3);
+      const rm = Math.round((r + avg) / 2),
+        gm = Math.round((g + avg) / 2),
+        bm = Math.round((b + avg) / 2);
       // apply to document root
       const root = document.documentElement.style;
       root.setProperty('--accent', `rgb(${r},${g},${b})`);
       root.setProperty('--accent-2', `rgb(${r2},${g2},${b2})`);
       root.setProperty('--muted', `rgba(${rm},${gm},${bm},0.8)`);
       root.setProperty('--text', '#f5f9ff');
-      root.setProperty('--overlay-rgb', `${Math.round(r*0.04)},${Math.round(g*0.07)},${Math.round(b*0.09)}`);
-    }catch(e){
+      root.setProperty(
+        '--overlay-rgb',
+        `${Math.round(r * 0.04)},${Math.round(g * 0.07)},${Math.round(b * 0.09)}`
+      );
+    } catch (e) {
       // silently fail if canvas is blocked
       console.warn('No se pudo extraer la paleta del fondo:', e);
     }
   };
 
   // Smooth scroll for internal links
-  document.querySelectorAll('a[href^="#"]').forEach(a=>{
-    a.addEventListener('click',e=>{
+  document.querySelectorAll('a[href^="#"]').forEach((a) => {
+    a.addEventListener('click', (e) => {
       const href = a.getAttribute('href');
-      if(href.length>1){
+      if (href.length > 1) {
         e.preventDefault();
         const target = document.querySelector(href);
-        if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
   });
@@ -124,8 +144,6 @@ document.addEventListener('DOMContentLoaded',()=>{
     }
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
   });
-
-  // ...existing content...
 
   // Handle back to blog button
   const backToBlogBtn = document.getElementById('back-to-blog');
@@ -288,105 +306,51 @@ document.addEventListener('DOMContentLoaded',()=>{
     });
   }
 
-  // Load and display reviews
-  let reviews = [
-    {
-      "name": "María González",
-      "stars": 5,
-      "comment": "Excelente servicio de mantenimiento de PC. Mi ordenador va como nuevo después de la limpieza y optimización. Muy profesional y atento."
-    },
-    {
-      "name": "Pedro Sánchez",
-      "stars": 5,
-      "comment": "Resolvió un problema grave con mi portátil que nadie más pudo arreglar. Recomiendo sus servicios al 100%."
-    },
-    {
-      "name": "Carmen López",
-      "stars": 4,
-      "comment": "Buen trabajo en la configuración de mi red doméstica. Todo funciona perfectamente ahora. Solo tardó un poco más de lo esperado."
-    },
-    {
-      "name": "Antonio Ruiz",
-      "stars": 5,
-      "comment": "Instaló Windows y todos los programas que necesitaba. Todo quedó perfecto y me explicó cómo mantenerlo. Excelente atención."
-    },
-    {
-      "name": "Isabel Martín",
-      "stars": 5,
-      "comment": "Servicio de eliminación de virus muy efectivo. Mi PC estaba infectado y ahora funciona sin problemas. Gracias por la paciencia."
-    }
-  ];
+  // New function to load and display reviews from Google Sheets API with floating animation and tilt
+  async function cargarReseñas() {
+    const apiKey = 'AIzaSyDO0_4OokHI5jzRAktCn8ogFWjuyPvg-Bw'; // Replace with your API key
+    const spreadsheetId = '1OaXTGbKGI5BSkJVleZFi0v462zyBgZupXGv4hz51fMM'; // Replace with your spreadsheet ID
+    const range = 'Hoja1!A2:B'; // Range to fetch (Name and Review columns)
 
-  const reviewsList = document.getElementById('reviews-list');
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
 
-  function renderReviews() {
-    reviewsList.innerHTML = '';
-    reviews.forEach((review, index) => {
-      const reviewItem = document.createElement('div');
-      reviewItem.className = 'review-item';
-      reviewItem.innerHTML = `
-        <h3>${review.name}</h3>
-        <div class="review-stars">${'★'.repeat(review.stars)}${'☆'.repeat(5 - review.stars)}</div>
-        <p class="review-comment">${review.comment}</p>
-      `;
-      reviewsList.appendChild(reviewItem);
-    });
-  }
-
-  renderReviews();
-
-  // Toggle review form
-  const addReviewBtn = document.getElementById('add-review-btn');
-  const reviewFormContainer = document.getElementById('review-form-container');
-  if (addReviewBtn && reviewFormContainer) {
-    addReviewBtn.addEventListener('click', () => {
-      const isVisible = reviewFormContainer.style.display !== 'none';
-      reviewFormContainer.style.display = isVisible ? 'none' : 'block';
-    });
-  }
-
-  // Handle review form submission
-  const reviewForm = document.getElementById('review-form');
-  if (reviewForm) {
-    reviewForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      alert('Procesando envío de reseña...');
-      const name = document.getElementById('review-name').value.trim();
-      const comment = document.getElementById('review-comment').value.trim();
-      const rating = document.querySelector('input[name="rating"]:checked')?.value;
-
-      if (name && comment && rating) {
-        if (typeof emailjs !== 'undefined') {
-          alert('Enviando email...');
-          emailjs.send('service_f4ac4iu', 'template_6qz0zo5', {
-            name: name,
-            comment: comment,
-            rating: rating
-          }).then(() => {
-            alert('Email enviado correctamente.');
-            // On success, add to local reviews and render
-            const newReview = {
-              name: name,
-              stars: parseInt(rating),
-              comment: comment
-            };
-            reviews.unshift(newReview); // Add to beginning
-            renderReviews();
-            reviewForm.reset();
-            reviewFormContainer.style.display = 'none';
-            alert('Reseña enviada correctamente.');
-          }).catch((error) => {
-            console.error('Error al enviar la reseña:', error);
-            alert('Error al enviar la reseña: ' + error.text);
-          });
-        } else {
-          alert('EmailJS no está disponible. Revisa la conexión a internet o el script.');
-        }
-      } else {
-        alert('Por favor, completa todos los campos: nombre, comentario y puntuación.');
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} - ${response.statusText}`);
       }
-    });
-  } else {
-    console.warn('Formulario de reseñas no encontrado.');
+      const data = await response.json();
+
+      const divReseñas = document.getElementById('contenido-reseñas');
+      divReseñas.innerHTML = ''; // Clear existing content
+
+      if (data.values && data.values.length > 0) {
+        data.values.forEach((row) => {
+          const nombre = row[0] || 'Anónimo';
+          const reseña = row[1] || '';
+
+          const card = document.createElement('div');
+          card.className = 'review-card floating';
+          const tilt = (Math.random() - 0.5) * 6; // Random tilt between -3 and 3 degrees
+          card.style.setProperty('--tilt', `${tilt}deg`);
+
+          card.innerHTML = `
+            <h4>${nombre}</h4>
+            <p>${reseña}</p>
+          `;
+
+          divReseñas.appendChild(card);
+        });
+      } else {
+        divReseñas.innerHTML = '<p>No hay reseñas aún.</p>';
+      }
+    } catch (error) {
+      console.error('Error al cargar reseñas:', error);
+      document.getElementById('contenido-reseñas').innerHTML =
+        '<p>Error al cargar reseñas. Verifica la consola del navegador.</p>';
+    }
   }
+
+  // Load reviews on DOMContentLoaded
+  cargarReseñas();
 });

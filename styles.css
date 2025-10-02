@@ -695,3 +695,110 @@ h1, h2, h3 {
   color: #ffffff;
   line-height: 1.5;
 }
+
+/* Galaxy button styles */
+.galaxy-btn {
+  background: linear-gradient(45deg, #0f0f23, #1a1a2e, #16213e, #0f0f23);
+  background-size: 400% 400%;
+  animation: galaxyShift 4s ease-in-out infinite, shine 2s ease-in-out infinite;
+  color: #ffffff;
+  border: 2px solid #4a90e2;
+  padding: 1.5rem 3rem;
+  border-radius: 50px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: block;
+  margin: 2rem auto 0;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  box-shadow: 0 0 30px rgba(74, 144, 226, 0.5);
+}
+
+.galaxy-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: shineMove 3s infinite;
+}
+
+.galaxy-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 50px rgba(74, 144, 226, 0.8), 0 0 100px rgba(74, 144, 226, 0.4);
+}
+
+@keyframes galaxyShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes shine {
+  0%, 100% { box-shadow: 0 0 30px rgba(74, 144, 226, 0.5); }
+  50% { box-shadow: 0 0 60px rgba(74, 144, 226, 0.8), 0 0 120px rgba(74, 144, 226, 0.3); }
+}
+
+@keyframes shineMove {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Reviews display styles */
+.reviews-display {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Review card styles */
+.review-card {
+  background: var(--accent-2);
+  color: var(--text);
+  padding: 1rem 1.5rem;
+  margin: 1rem 0;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transform: rotate(var(--tilt));
+  transition: box-shadow 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+  cursor: default;
+  user-select: none;
+}
+
+/* Floating animation */
+@keyframes floating {
+  0%, 100% {
+    transform: translateY(0) rotate(var(--tilt));
+  }
+  50% {
+    transform: translateY(-8px) rotate(calc(var(--tilt) + 1deg));
+  }
+}
+
+.floating {
+  animation: floating 4s ease-in-out infinite;
+}
+
+.review-card:hover {
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+}
+
+.review-card h4 {
+  margin: 0 0 0.5rem 0;
+  color: #ffffff;
+  font-size: 1.1rem;
+}
+
+.review-card p {
+  color: #ffffff;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}

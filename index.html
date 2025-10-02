@@ -111,43 +111,15 @@ Hoy, mientras estudio telecomunicaciones, mi mirada se posa con entusiasmo en el
         <button class="contact-btn" onclick="window.open('https://www.linkedin.com/in/josemiguelmora/', '_blank')">Mi perfil profesional de LinkedIn</button>
         <button class="contact-btn" onclick="const link = document.createElement('a'); link.href = 'assets/cv.pdf'; link.download = 'cv.pdf'; link.click();">Descargar mi currículum (PDF)</button>
         <button class="contact-btn" id="presupuestos-btn">Presupuestos</button>
+        <button class="contact-btn" onclick="window.open('https://wa.me/34672115384', '_blank')">Whatsapp</button>
       </div>
     </section>
 
-    <!-- Reseñas -->
-    <section id="reviews" class="section alt">
+
+    <section id="reviews" class="section alt" style="margin-top: 2rem;">
       <div class="container" data-animate="fade-up">
         <h2>Reseñas</h2>
-        <div id="reviews-list"></div>
-        <button id="add-review-btn" class="add-review-btn">Añade tu reseña</button>
-        <div id="review-form-container" class="review-form-container" style="display: none;">
-          <form id="review-form">
-            <div class="form-group">
-              <label for="review-name">Nombre:</label>
-              <input type="text" id="review-name" name="name" required>
-            </div>
-            <div class="form-group">
-              <label for="review-comment">Comentario:</label>
-              <textarea id="review-comment" name="comment" rows="4" required></textarea>
-            </div>
-            <div class="form-group">
-              <label>Puntuación:</label>
-              <div class="star-rating">
-                <input type="radio" id="star-5" name="rating" value="5">
-                <label for="star-5">★</label>
-                <input type="radio" id="star-4" name="rating" value="4">
-                <label for="star-4">★</label>
-                <input type="radio" id="star-3" name="rating" value="3">
-                <label for="star-3">★</label>
-                <input type="radio" id="star-2" name="rating" value="2">
-                <label for="star-2">★</label>
-                <input type="radio" id="star-1" name="rating" value="1">
-                <label for="star-1">★</label>
-              </div>
-            </div>
-            <button type="submit" class="submit-review-btn">Enviar reseña</button>
-          </form>
-        </div>
+        <div id="contenido-reseñas" class="reviews-display"></div>
       </div>
     </section>
 
