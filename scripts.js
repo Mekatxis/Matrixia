@@ -306,51 +306,59 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // New function to load and display reviews from Google Sheets API with floating animation and tilt
-  async function cargarReseñas() {
-    const apiKey = 'AIzaSyDO0_4OokHI5jzRAktCn8ogFWjuyPvg-Bw'; // Replace with your API key
-    const spreadsheetId = '1OaXTGbKGI5BSkJVleZFi0v462zyBgZupXGv4hz51fMM'; // Replace with your spreadsheet ID
-    const range = 'Hoja1!A2:B'; // Range to fetch (Name and Review columns)
-
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
-
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status} - ${response.statusText}`);
+  // Toggle review form
+  const showReviewFormBtn = document.getElementById('show-review-form-btn');
+  if (showReviewFormBtn) {
+    showReviewFormBtn.addEventListener('click', () => {
+      const reviewFormContainer = document.getElementById('review-form-container');
+      if (reviewFormContainer) {
+        const isVisible = reviewFormContainer.style.display !== 'none';
+        reviewFormContainer.style.display = isVisible ? 'none' : 'block';
       }
-      const data = await response.json();
-
-      const divReseñas = document.getElementById('contenido-reseñas');
-      divReseñas.innerHTML = ''; // Clear existing content
-
-      if (data.values && data.values.length > 0) {
-        data.values.forEach((row) => {
-          const nombre = row[0] || 'Anónimo';
-          const reseña = row[1] || '';
-
-          const card = document.createElement('div');
-          card.className = 'review-card floating';
-          const tilt = (Math.random() - 0.5) * 6; // Random tilt between -3 and 3 degrees
-          card.style.setProperty('--tilt', `${tilt}deg`);
-
-          card.innerHTML = `
-            <h4>${nombre}</h4>
-            <p>${reseña}</p>
-          `;
-
-          divReseñas.appendChild(card);
-        });
-      } else {
-        divReseñas.innerHTML = '<p>No hay reseñas aún.</p>';
-      }
-    } catch (error) {
-      console.error('Error al cargar reseñas:', error);
-      document.getElementById('contenido-reseñas').innerHTML =
-        '<p>Error al cargar reseñas. Verifica la consola del navegador.</p>';
-    }
+    });
   }
 
-  // Load reviews on DOMContentLoaded
-  cargarReseñas();
+  // Load review form from separate file
+  fetch('./review-form.html')
+    .then(response => response.text())
+    .then(html => {
+      document.getElementById('review-form-placeholder').innerHTML = html;
+
+      // Handle review form submission
+      const reviewForm = document.getElementById('review-form');
+      if (reviewForm) {
+        reviewForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const formData = new FormData(reviewForm);
+          const name = formData.get('name');
+          const rating = formData.get('rating');
+          const reviewText = formData.get('review');
+
+          // Send to Formspree
+          try {
+            const response = await fetch('https://formspree.io/f/xyznjnkl', {
+              method: 'POST',
+              body: formData,
+              headers: {
+                'Accept': 'application/json'
+              }
+            });
+            if (response.ok) {
+              alert('Reseña enviada exitosamente!');
+              reviewForm.reset();
+              const reviewFormContainer = document.getElementById('review-form-container');
+              if (reviewFormContainer) reviewFormContainer.style.display = 'none';
+            } else {
+              alert('Error al enviar la reseña. Inténtalo de nuevo.');
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            alert('Error al enviar la reseña. Inténtalo de nuevo.');
+          }
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Error loading review form:', error);
+    });
 });
