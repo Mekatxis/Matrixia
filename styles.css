@@ -526,17 +526,69 @@ h1, h2, h3 {
 }
 
 .star-rating label {
-  font-size: 1.5rem;
-  color: rgba(255, 255, 255, 0.3);
+  font-size: 2.5rem;
+  color: rgba(255, 255, 255, 0.5);
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: color 0.4s ease, transform 0.4s ease;
   padding: 0.25rem;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.7);
+  filter: drop-shadow(0 0 4px rgba(0,0,0,0.6));
+  border-radius: 50%;
 }
 
-.star-rating input:checked ~ label,
 .star-rating label:hover,
 .star-rating label:hover ~ label {
-  color: var(--accent);
+  color: #ffffff;
+  transform: scale(1.3);
+  filter: drop-shadow(0 0 12px #ffffff);
+}
+
+.star-rating input:checked ~ label {
+  color: #4a90e2;
+  filter: drop-shadow(0 0 12px #4a90e2);
+  transform: scale(1.4);
+  animation: starGlowPulse 1.5s infinite alternate ease-in-out;
+}
+
+/* Star glow pulse animation */
+@keyframes starGlowPulse {
+  0% {
+    filter: drop-shadow(0 0 12px #4a90e2);
+    transform: scale(1.3);
+  }
+  100% {
+    filter: drop-shadow(0 0 24px #7fbaff);
+    transform: scale(1.5);
+  }
+}
+
+/* Glowing pulse effect for review name input */
+#review-name {
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #ffffff;
+  background: transparent;
+  border: 1px solid rgba(74, 144, 226, 0.6);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 0 8px rgba(74, 144, 226, 0.7);
+  animation: glowPulse 3s ease-in-out infinite;
+  transition: box-shadow 0.3s ease;
+}
+
+#review-name:focus {
+  outline: none;
+  box-shadow: 0 0 16px #4a90e2, 0 0 24px #7fbaff;
+}
+
+/* Glow pulse animation */
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(74, 144, 226, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 16px #4a90e2, 0 0 24px #7fbaff;
+  }
 }
 
 /* Form fields adjusted to fit container */
@@ -760,17 +812,54 @@ h1, h2, h3 {
 
 /* Review card styles */
 .review-card {
-  background: var(--accent-2);
+  background: rgba(68, 68, 153, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   color: var(--text);
-  padding: 1rem 1.5rem;
+  padding: 1.5rem;
   margin: 1rem 0;
   border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-  transform: rotate(var(--tilt));
-  transition: box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   font-family: 'Montserrat', sans-serif;
   cursor: default;
   user-select: none;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Tilt variations for each card */
+.review-card:nth-child(1) {
+  transform: rotate(-2deg);
+}
+
+.review-card:nth-child(2) {
+  transform: rotate(1.5deg);
+}
+
+.review-card:nth-child(3) {
+  transform: rotate(-1deg);
+}
+
+.review-card:nth-child(4) {
+  transform: rotate(2deg);
+}
+
+.review-card:nth-child(5) {
+  transform: rotate(-1.5deg);
+}
+
+.review-card:nth-child(6) {
+  transform: rotate(0.5deg);
+}
+
+.review-card:nth-child(7) {
+  transform: rotate(-2.5deg);
+}
+
+.review-card:nth-child(8) {
+  transform: rotate(1deg);
 }
 
 /* Floating animation */
@@ -788,13 +877,63 @@ h1, h2, h3 {
 }
 
 .review-card:hover {
+  transform: translateY(-5px) scale(1.02);
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
 }
 
-.review-card h4 {
+.review-card h3 {
   margin: 0 0 0.5rem 0;
   color: #ffffff;
   font-size: 1.1rem;
+}
+
+.review-card .review-rating {
+  margin-bottom: 0.5rem;
+}
+
+/* Star rating styles */
+.review-rating {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.review-rating .star {
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.6);
+  filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));
+  transition: color 0.4s ease, transform 0.4s ease;
+  cursor: default;
+  user-select: none;
+  padding: 0 0.15rem;
+  border-radius: 50%;
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
+}
+
+.review-rating .star:hover {
+  color: #ffffff;
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 8px #ffffff);
+}
+
+/* Filled stars */
+.review-rating .star.filled {
+  color: #ffffff;
+  filter: drop-shadow(0 0 8px #4a90e2);
+  transform: scale(1.3);
+  animation: starGlowPulse 1.5s infinite alternate ease-in-out;
+}
+
+/* Star glow pulse animation */
+@keyframes starGlowPulse {
+  0% {
+    filter: drop-shadow(0 0 8px #4a90e2);
+    transform: scale(1.2);
+  }
+  100% {
+    filter: drop-shadow(0 0 16px #7fbaff);
+    transform: scale(1.4);
+  }
 }
 
 .review-card p {
@@ -802,3 +941,33 @@ h1, h2, h3 {
   font-size: 0.9rem;
   line-height: 1.4;
 }
+
+/* Galaxy animated name */
+.galaxy-animated {
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 1.2rem;
+  animation: galaxyGlow 4s ease-in-out infinite;
+  position: relative;
+}
+
+@keyframes galaxyGlow {
+  0%, 100% {
+    color: #ffffff;
+    text-shadow: 0 0 5px #4a90e2, 0 0 10px #4a90e2;
+  }
+  25% {
+    color: #e0f7ff;
+    text-shadow: 0 0 8px #7fbaff, 0 0 15px #7fbaff;
+  }
+  50% {
+    color: #d4e4ff;
+    text-shadow: 0 0 10px #9b59b6, 0 0 20px #9b59b6;
+  }
+  75% {
+    color: #f0e6ff;
+    text-shadow: 0 0 8px #ba68c8, 0 0 15px #ba68c8;
+  }
+}
+
+

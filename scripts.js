@@ -318,6 +318,54 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Load and display reviews from reviews.json
+  const reviewsContainer = document.getElementById('reviews-container');
+  if (reviewsContainer) {
+    fetch('reviews.json')
+      .then(response => response.json())
+      .then(reviews => {
+        if (reviews.length === 0) {
+          reviewsContainer.innerHTML = '<p>No hay reseñas disponibles.</p>';
+          return;
+        }
+        reviewsContainer.innerHTML = '';
+        reviews.slice(0, 5).forEach(review => {
+          const reviewEl = document.createElement('div');
+          reviewEl.classList.add('review-card');
+
+          // Create animated name element with galaxy theme
+          const nameEl = document.createElement('h3');
+          nameEl.classList.add('reviewer-name', 'galaxy-animated');
+          nameEl.textContent = review.name;
+
+          // Create rating element (stars)
+          const ratingEl = document.createElement('div');
+          ratingEl.classList.add('review-rating');
+          for (let i = 1; i <= 5; i++) {
+            const star = document.createElement('span');
+            star.classList.add('star');
+            star.textContent = i <= review.rating ? '★' : '☆';
+            ratingEl.appendChild(star);
+          }
+
+          // Create review text element
+          const textEl = document.createElement('p');
+          textEl.classList.add('review-text');
+          textEl.textContent = review.review;
+
+          reviewEl.appendChild(nameEl);
+          reviewEl.appendChild(ratingEl);
+          reviewEl.appendChild(textEl);
+
+          reviewsContainer.appendChild(reviewEl);
+        });
+      })
+      .catch(error => {
+        console.error('Error loading reviews:', error);
+        reviewsContainer.innerHTML = '<p>Error al cargar las reseñas.</p>';
+      });
+  }
+
   // Load review form from separate file
   fetch('./review-form.html')
     .then(response => response.text())
