@@ -321,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Load and display reviews from reviews.json
   const reviewsContainer = document.getElementById('reviews-container');
   if (reviewsContainer) {
-    fetch('reviews.json')
+    fetch('Reviews.json')
       .then(response => response.json())
       .then(reviews => {
         if (reviews.length === 0) {
