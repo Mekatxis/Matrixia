@@ -329,6 +329,13 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
         reviewsContainer.innerHTML = '';
+        // Set justify content based on number of reviews
+        let justify = 'center';
+        if (reviews.length >= 3) {
+          justify = 'space-around';
+        }
+        reviewsContainer.style.justifyContent = justify;
+
         reviews.slice(0, 5).forEach(review => {
           const reviewEl = document.createElement('div');
           reviewEl.classList.add('review-card');
